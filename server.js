@@ -1,0 +1,13 @@
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import apiRouter from './routes/api.js';
+dotenv.config();
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use('/api', apiRouter);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
