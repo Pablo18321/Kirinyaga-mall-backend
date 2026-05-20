@@ -1,0 +1,17 @@
+import express from 'express';
+import { auth, admin } from '../middleware/auth.js';
+import { register, login, logout, me } from '../controllers/authController.js';
+import { getProducts, addProduct, deleteProduct } from '../controllers/productController.js';
+import { createOrder, trackOrder, getAllOrders } from '../controllers/orderController.js';
+const router = express.Router();
+router.post('/auth/register', register);
+router.post('/auth/login', login);
+router.post('/auth/logout', logout);
+router.get('/auth/me', auth, me);
+router.get('/products', getProducts);
+router.post('/products', auth, admin, addProduct);
+router.delete('/products/:id', auth, admin, deleteProduct);
+router.post('/orders', auth, createOrder);
+router.get('/orders/track/:id', trackOrder);
+router.get('/admin/orders', auth, admin, getAllOrders);
+export default router;
